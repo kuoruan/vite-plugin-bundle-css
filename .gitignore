@@ -4,4 +4,4 @@ dist/
 .idea/
 *.log
 *.log.*
-*.config.ts*
+*.config.ts.*
