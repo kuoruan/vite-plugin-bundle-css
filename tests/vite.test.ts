@@ -3,6 +3,7 @@ import { build, mergeConfig, type UserConfig } from "vite";
 
 import bundleCss from "@/index";
 
+import { getAssetOutputs } from "./utils";
 import viteConfig from "./vite.config";
 
 describe("vite", () => {
@@ -20,9 +21,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with import mode", async () => {
@@ -44,9 +43,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with fileName", async () => {
@@ -67,9 +64,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with filter", async () => {
@@ -90,9 +85,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with transform", async () => {
@@ -115,9 +108,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with filter in import mode", async () => {
@@ -140,9 +131,7 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 
   it("should build with multiple entries", async () => {
@@ -160,8 +149,6 @@ describe("vite", () => {
 
     const data = (await build(config)) as RollupOutput[];
 
-    expect(
-      data[0].output.filter((item) => item.type === "asset"),
-    ).toMatchSnapshot();
+    expect(getAssetOutputs(data)).toMatchSnapshot();
   });
 });
