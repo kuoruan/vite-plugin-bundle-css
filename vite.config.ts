@@ -1,9 +1,18 @@
+/// <reference types="vitest" />
+
+import path from "node:path";
+
 import { defineConfig } from "vite";
-import path from "path";
 import dts from "vite-plugin-dts";
-import pkg from "./package.json";
+
+import package_ from "./package.json";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "src"),
+    },
+  },
   build: {
     lib: {
       entry: path.resolve(import.meta.dirname, "src/index.ts"),
@@ -24,10 +33,18 @@ export default defineConfig({
       ],
       external: [
         "node:path",
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
+        ...Object.keys(package_.dependencies),
+        ...Object.keys(package_.peerDependencies),
       ],
     },
   },
-  plugins: [dts()],
+  plugins: [
+    dts({
+      exclude: ["tests/**/*", "vite.config.ts"],
+    }),
+  ],
+  test: {
+    globals: true,
+    include: ["tests/*.{test,spec}.ts"],
+  },
 });

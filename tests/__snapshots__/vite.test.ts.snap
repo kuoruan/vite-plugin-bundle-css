@@ -1,0 +1,200 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`vite > should build 1`] = `
+[
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b {
+  color: red;
+}
+
+.b .c {
+  color: green;
+}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "style.css",
+    "name": "style.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with fileName 1`] = `
+[
+  {
+    "fileName": "assets/bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b {
+  color: red;
+}
+
+.b .c {
+  color: green;
+}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "style.css",
+    "name": "style.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with filter 1`] = `
+[
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": "",
+    "type": "asset",
+  },
+  {
+    "fileName": "style.css",
+    "name": "style.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".c .d{color:red}.d .e{color:green}
+",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with filter in import mode 1`] = `
+[
+  {
+    "fileName": "scss.css",
+    "name": "scss.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".c .d{color:red}.d .e{color:green}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "css.css",
+    "name": "css.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": "@import "./css.css";",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with import mode 1`] = `
+[
+  {
+    "fileName": "css.css",
+    "name": "css.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": "@import "./css.css";",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with multiple entries 1`] = `
+[
+  {
+    "fileName": "css.css",
+    "name": "css.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "scss.css",
+    "name": "scss.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".c .d{color:red}.d .e{color:green}
+",
+    "type": "asset",
+  },
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b {
+  color: red;
+}
+
+.b .c {
+  color: green;
+}
+
+.c .d {
+  color: red;
+}
+.d .e {
+  color: green;
+}",
+    "type": "asset",
+  },
+]
+`;
+
+exports[`vite > should build with transform 1`] = `
+[
+  {
+    "fileName": "bundle.css",
+    "name": "bundle.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}",
+    "type": "asset",
+  },
+  {
+    "fileName": "style.css",
+    "name": "style.css",
+    "needsCodeReference": false,
+    "originalFileName": null,
+    "source": ".a .b{color:red}.b .c{color:green}
+",
+    "type": "asset",
+  },
+]
+`;
