@@ -123,7 +123,7 @@ The output file will be like this:
 }
 ```
 
-***Note***: The bundle CSS code will not be minified. because of the plguin implementation.
+***Note***: The bundle CSS code will not be minified. because of the plugin implementation.
 
 If you want to minify the `bundoe.css` code, you can use the `transform` option:
 
