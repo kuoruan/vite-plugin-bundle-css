@@ -1,68 +1,95 @@
 import path from "node:path";
 
-import type { Plugin } from "vite";
-import type { OutputAsset } from "rollup";
 import { createFilter, normalizePath } from "@rollup/pluginutils";
+import type { Plugin } from "vite";
+
 import type { BundleCssOptions } from "./types";
 
-const defaults: BundleCssOptions = {
+const defaults = {
+  name: "bundle.css",
   fileName: "bundle.css",
-  include: "**/*.css",
+  include: ["**/*.s[ca]ss", "**/*.less", "**/*.styl", "**/*.css"],
   exclude: ["**/node_modules/**"],
-  mode: "import",
-};
+  mode: "inline",
+} satisfies BundleCssOptions;
 
 export default function bundleCss(options: BundleCssOptions = {}): Plugin {
   const mergedOptions = {
     ...defaults,
     ...options,
-  } as Required<BundleCssOptions>;
+  };
+
   const filter = createFilter(mergedOptions.include, mergedOptions.exclude);
 
-  return {
-    name: "vite-plugin-bundle-css",
-    generateBundle(_, bundle) {
-      const cssFiles = Object.values(bundle).filter(
-        (file) => file.type === "asset" && filter(file.fileName),
-      ) as OutputAsset[];
+  let cssCodes: Set<string> | null = null;
 
-      if (cssFiles.length === 0) {
-        return;
+  return {
+    name: "vite:bundle-css",
+    buildStart() {
+      if (mergedOptions.mode === "inline") {
+        cssCodes = new Set();
+      }
+    },
+    transform(code, id) {
+      if (filter(id)) {
+        cssCodes?.add(code);
       }
 
+      return null;
+    },
+    async generateBundle(_, bundle) {
       let fileContent: string;
 
       switch (mergedOptions.mode) {
         case "import": {
-          fileContent = cssFiles
+          const assets = Object.values(bundle).filter(
+            (file) => file.type === "asset" && filter(file.fileName),
+          );
+
+          fileContent = assets
             .map((file) => {
               const bundleFilePath = path.dirname(mergedOptions.fileName);
+
               const cssFilePath = path.dirname(file.fileName);
+              const cssFileName = path.basename(file.fileName);
 
               const relativePath = path.relative(bundleFilePath, cssFilePath);
 
-              const importPath = normalizePath(
-                path.join(relativePath, path.basename(file.fileName)),
+              let importPath = normalizePath(
+                path.join(relativePath, cssFileName),
               );
 
-              return `import "${importPath}";`;
+              // always use relative import path
+              if (!importPath.startsWith(".")) {
+                importPath = `./${importPath}`;
+              }
+
+              return `@import "${importPath}";`;
             })
             .join("\n");
-
 
           break;
         }
         case "inline": {
-          fileContent = cssFiles.map((file) => file.source).join("\n");
+          fileContent = [...(cssCodes ?? [])].filter(Boolean).join("\n");
           break;
         }
-        default:
-          throw new Error(`Invalid mode: ${mergedOptions.mode}`);
+        default: {
+          throw new Error(`Invalid mode: ${String(mergedOptions.mode)}`);
+        }
+      }
+
+      if (typeof mergedOptions.transform === "function") {
+        fileContent = await mergedOptions.transform(
+          fileContent,
+          mergedOptions.fileName,
+        );
       }
 
       this.emitFile({
         type: "asset",
         fileName: mergedOptions.fileName,
+        name: mergedOptions.name,
         source: fileContent,
       });
     },
