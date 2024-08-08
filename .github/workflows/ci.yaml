@@ -1,15 +1,16 @@
-name: Node.js Release
+name: Node.js CI
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
 
     steps:
       - name: Checkout repository
@@ -27,18 +28,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org/'
 
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Lint
+        run: pnpm lint
+
       - name: Test
         run: pnpm test
 
-      - name: Bundle package
+      - name: Build
         run: pnpm build
-
-      - name: Publish
-        run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
