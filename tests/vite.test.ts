@@ -151,4 +151,26 @@ describe("vite", () => {
 
     expect(getAssetOutputs(data)).toMatchSnapshot();
   });
+
+  it('should build with "import" mode in multiple entries', async () => {
+    const config = mergeConfig<UserConfig, UserConfig>(viteConfig, {
+      build: {
+        cssCodeSplit: true,
+        lib: {
+          entry: ["/fixtures/css.ts", "/fixtures/scss.ts"],
+          formats: ["es"],
+          fileName: "[name].js",
+        },
+      },
+      plugins: [
+        bundleCss({
+          mode: "import",
+        }),
+      ],
+    });
+
+    const data = (await build(config)) as RollupOutput[];
+
+    expect(getAssetOutputs(data)).toMatchSnapshot();
+  });
 });
