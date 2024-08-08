@@ -147,10 +147,11 @@ export default function bundleCss(options: BundleCssOptions = {}): Plugin {
             return aIndex - bIndex;
           });
 
-          fileContent = sortedCssModuleIds
-            .map((id) => cssModules.get(id))
-            .filter(Boolean)
-            .join("\n");
+          fileContent =
+            sortedCssModuleIds
+              .map((id) => cssModules.get(id)?.trim())
+              .filter(Boolean)
+              .join("\n") + "\n";
           break;
         }
         default: {

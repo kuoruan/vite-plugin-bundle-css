@@ -10,7 +10,6 @@ exports[`vite > should build 1`] = `
     "source": ".a .b {
   color: red;
 }
-
 .b .c {
   color: green;
 }
@@ -72,7 +71,6 @@ exports[`vite > should build with fileName 1`] = `
     "source": ".a .b {
   color: red;
 }
-
 .b .c {
   color: green;
 }
@@ -98,7 +96,8 @@ exports[`vite > should build with filter 1`] = `
     "name": "bundle.css",
     "needsCodeReference": false,
     "originalFileName": null,
-    "source": "",
+    "source": "
+",
     "type": "asset",
   },
   {
@@ -178,17 +177,16 @@ exports[`vite > should build with multiple entries 1`] = `
     "source": ".a .b {
   color: red;
 }
-
 .b .c {
   color: green;
 }
-
 .c .d {
   color: red;
 }
 .d .e {
   color: green;
-}",
+}
+",
     "type": "asset",
   },
   {
@@ -222,7 +220,6 @@ exports[`vite > should build with transform 1`] = `
     "source": ".a .b {
   background-color: red;
 }
-
 .b .c {
   background-color: green;
 }
