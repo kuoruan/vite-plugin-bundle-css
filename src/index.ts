@@ -44,28 +44,27 @@ export default function bundleCss(options: BundleCssOptions = {}): Plugin {
             (file) => file.type === "asset" && filter(file.fileName),
           );
 
-          fileContent =
-            assets
-              .map((file) => {
-                const bundleFilePath = path.dirname(mergedOptions.fileName);
+          fileContent = assets
+            .map((file) => {
+              const bundleFilePath = path.dirname(mergedOptions.fileName);
 
-                const cssFilePath = path.dirname(file.fileName);
-                const cssFileName = path.basename(file.fileName);
+              const cssFilePath = path.dirname(file.fileName);
+              const cssFileName = path.basename(file.fileName);
 
-                const relativePath = path.relative(bundleFilePath, cssFilePath);
+              const relativePath = path.relative(bundleFilePath, cssFilePath);
 
-                let importPath = normalizePath(
-                  path.join(relativePath, cssFileName),
-                );
+              let importPath = normalizePath(
+                path.join(relativePath, cssFileName),
+              );
 
-                // always use relative import path
-                if (!importPath.startsWith(".")) {
-                  importPath = `./${importPath}`;
-                }
+              // always use relative import path
+              if (!importPath.startsWith(".")) {
+                importPath = `./${importPath}`;
+              }
 
-                return `@import "${importPath}";`;
-              })
-              .join("\n") + "\n";
+              return `@import "${importPath}";`;
+            })
+            .join("\n");
 
           break;
         }
@@ -147,11 +146,10 @@ export default function bundleCss(options: BundleCssOptions = {}): Plugin {
             return aIndex - bIndex;
           });
 
-          fileContent =
-            sortedCssModuleIds
-              .map((id) => cssModules.get(id)?.trim())
-              .filter(Boolean)
-              .join("\n") + "\n";
+          fileContent = sortedCssModuleIds
+            .map((id) => cssModules.get(id)?.trim())
+            .filter(Boolean)
+            .join("\n");
           break;
         }
         default: {
@@ -170,7 +168,10 @@ export default function bundleCss(options: BundleCssOptions = {}): Plugin {
         type: "asset",
         fileName: mergedOptions.fileName,
         name: mergedOptions.name,
-        source: fileContent,
+        source:
+          !!fileContent && !fileContent.endsWith("\n")
+            ? `${fileContent}\n`
+            : fileContent,
       });
     },
   };

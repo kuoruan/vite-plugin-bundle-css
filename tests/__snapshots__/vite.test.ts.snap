@@ -96,8 +96,7 @@ exports[`vite > should build with filter 1`] = `
     "name": "bundle.css",
     "needsCodeReference": false,
     "originalFileName": null,
-    "source": "
-",
+    "source": "",
     "type": "asset",
   },
   {
