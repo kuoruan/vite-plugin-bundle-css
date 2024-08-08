@@ -33,14 +33,14 @@ export default {
 
 ## Options
 
-| Name      | Type                                          | Required | Default                                                  | Description                                                                                                                                |
-| --------- | --------------------------------------------- | -------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| name      | `string`                                      | false    | `'bundle.css'`                                           | The name of the output file.                                                                                                               |
-| fileName  | `string`                                      | false    | `'bundle.css'`                                           | The output file path of the output file, relative to the `build.outDir`.                                                                   |
-| include   | `string[] \| RegExp[] \| string \| RegExp`    | false    | `["**/*.s[ca]ss", "**/*.less", "**/*.styl", "**/*.css"]` | The CSS files to include.                                                                                                                  |
-| exclude   | `string[] \| RegExp[] \| string \| RegExp`    | false    | `["**/node_modules/**"]`                                 | The CSS files to exclude.                                                                                                                  |
-| mode      | `'inline' \| 'import'`                        | false    | `'inline'`                                               | The mode of the output CSS. `'inline'` means inline the CSS into the output file, `'import'` means import the CSS file in the output file. |
-| transform | `(code: string) => string \| Promise<string>` | false    |                                                          | The transform function of the bundled CSS code.                                                                                            |
+| Name      | Type                                                      | Required | Default                                                  | Description                                                                                                                                |
+| --------- | --------------------------------------------------------- | -------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| name      | `string`                                                  | false    | `'bundle.css'`                                           | The name of the output file.                                                                                                               |
+| fileName  | `string`                                                  | false    | `'bundle.css'`                                           | The output file path of the output file, relative to the `build.outDir`.                                                                   |
+| include   | `string[] \| RegExp[] \| string \| RegExp`                | false    | `["**/*.s[ca]ss", "**/*.less", "**/*.styl", "**/*.css"]` | The CSS files to include.                                                                                                                  |
+| exclude   | `string[] \| RegExp[] \| string \| RegExp`                | false    | `["**/node_modules/**"]`                                 | The CSS files to exclude.                                                                                                                  |
+| mode      | `'inline' \| 'import'`                                    | false    | `'inline'`                                               | The mode of the output CSS. `'inline'` means inline the CSS into the output file, `'import'` means import the CSS file in the output file. |
+| transform | `(code: string, id: string) => string \| Promise<string>` | false    |                                                          | The transform function of the bundled CSS code.                                                                                            |
 
 ## Inline Mode
 
@@ -123,13 +123,13 @@ The output file will be like this:
 }
 ```
 
-***Note***: The bundle CSS code will not be minified. because of the plugin implementation.
+**_Note_**: The bundle CSS code will not be minified. because of the plugin implementation.
 
 If you want to minify the `bundoe.css` code, you can use the `transform` option:
 
 ```js
 // vite.config.js
-import { transform } from 'lightningcss';
+import { transform } from "lightningcss";
 import bundleCss from "vite-plugin-bundle-css";
 
 export default {
@@ -181,7 +181,7 @@ export default {
     rollupOptions: {
       output: {
         preserveModules: true,
-        preserveModulesRoot: 'src',
+        preserveModulesRoot: "src",
       },
     },
   },
@@ -210,5 +210,5 @@ Or only import the component's CSS file used.
 
 ## The `include` and `exclude` options
 
-- `inline` mode: The `include` and `exclude` options are used to filter the ***ORIGINAL*** CSS files to inline.
-- `import` mode: The `include` and `exclude` options are used to filter the ***OUTPUT*** CSS files to import.
+- `inline` mode: The `include` and `exclude` options are used to filter the **_ORIGINAL_** CSS files to inline.
+- `import` mode: The `include` and `exclude` options are used to filter the **_OUTPUT_** CSS files to import.
